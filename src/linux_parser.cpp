@@ -4,7 +4,6 @@
 #include <vector>
 
 #include "linux_parser.h"
-#include <ncurses.h>
 
 using std::stof;
 using std::string;
@@ -169,11 +168,29 @@ string LinuxParser::Command(int pid) {
   return cmd; 
 }
 
-// TODO: Read and return the memory used by a process
+// DONE: Read and return the memory used by a process
 // REMOVE: [[maybe_unused]] once you define the function
-string LinuxParser::Ram(int pid[[maybe_unused]]) { return string(); }
+string LinuxParser::Ram(int pid) { 
+  int ram;
+  std::string key;
+  std::string line;
+  std::ifstream stream(kProcDirectory+to_string(pid)+kStatusFilename);
+  if(stream.is_open())
+  {
+    while(std::getline(stream,line))
+    {
+      std::istringstream linestream(line);
+      linestream >> key >> ram;
+      if(key == "VmSize:")
+      {
+        break;
+      }
+    }
+  }
+  return to_string((ram/1024)); 
+  }
 
-// TODO: Read and return the user ID associated with a process
+// DONE: Read and return the user ID associated with a process
 // REMOVE: [[maybe_unused]] once you define the function
 string LinuxParser::Uid(int pid) { 
   std::string uid;
@@ -197,7 +214,7 @@ string LinuxParser::Uid(int pid) {
   return uid; 
   }
 
-// TODO: Read and return the user associated with a process
+// DONE: Read and return the user associated with a process
 // REMOVE: [[maybe_unused]] once you define the function
 string LinuxParser::User(int pid) { 
   std::string user;
