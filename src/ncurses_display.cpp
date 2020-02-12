@@ -84,13 +84,41 @@ void NCursesDisplay::DisplayProcesses(std::vector<Process>& processes,
 
 void NCursesDisplay::DisplayControls(int key[[maybe_unused]] ,WINDOW* window) {
   int row{0};
-  noecho();
+  noecho();mvwprintw(window, 1, ++row, "s");
+  init_pair(9,COLOR_BLACK,COLOR_WHITE);
+  wattron(window, COLOR_PAIR(9));
+  ++row;
+  mvwprintw(window, 1, ++row, "Sort");
+  wattroff(window, COLOR_PAIR(9));
+
+  row += 5;
+
+  mvwprintw(window, 1, ++row, "S");
+  init_pair(9,COLOR_BLACK,COLOR_WHITE);
+  wattron(window, COLOR_PAIR(9));
+  ++row;
+  mvwprintw(window, 1, ++row, "Search");
+  wattroff(window, COLOR_PAIR(9));
+
+  row += 7;
+
+  mvwprintw(window, 1, ++row, "K");
+  init_pair(9,COLOR_BLACK,COLOR_WHITE);
+  wattron(window, COLOR_PAIR(9));
+  ++row;
+  mvwprintw(window, 1, ++row, "Kill");
+  wattroff(window, COLOR_PAIR(9));
+
+  row += 5;
+
   mvwprintw(window, 1, ++row, "Q");
   init_pair(9,COLOR_BLACK,COLOR_WHITE);
   wattron(window, COLOR_PAIR(9));
   ++row;
   mvwprintw(window, 1, ++row, "Exit");
   wattroff(window, COLOR_PAIR(9));
+
+
   wrefresh(window);
 }
 
