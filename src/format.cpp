@@ -1,5 +1,5 @@
+#include <cmath>
 #include <string>
-#include <sstream>
 
 #include "format.h"
 
@@ -9,13 +9,11 @@ using std::string;
 // INPUT: Long int measuring seconds
 // OUTPUT: HH:MM:SS
 // REMOVE: [[maybe_unused]] once you define the function
-string Format::ElapsedTime(long seconds) { 
+string Format::ElapsedTime(long seconds) {
+  int hh = seconds / 3600;
+  int mm = (seconds % 3600);  //(3.6 - 3) = .6
+  int ss = (mm % 60);
 
-    float hh = float(seconds/3600.0f);
-    float mm = ((hh - (int)hh)*60);
-    int ss = ((mm - (int)mm)*100);
-
-    std::ostringstream stringstream;
-    stringstream << (int)hh << ":" << (int)mm << ":" << ss;
-    return stringstream.str(); 
+  return std::to_string(hh) + ":" + std::to_string((int)(mm / 60)) + ":" +
+         std::to_string(ss);
 }
